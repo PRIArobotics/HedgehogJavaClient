@@ -1,0 +1,36 @@
+apply from: project.file('gradle/scala.gradle')
+apply from: project.file('gradle/package.gradle')
+apply from: project.file('gradle/GitVersion.gradle')
+apply from: project.file('gradle/maven.gradle')
+apply from: project.file('gradle/proto.gradle')
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+group = 'at.pria.hedgehog'
+
+basePom {
+    project {
+        name project.name
+        description ''
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.11.+'
+    testCompile 'org.scalatest:scalatest_2.11:2.2.1'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.7.7'
+    }
+}

@@ -22,6 +22,8 @@ repositories {
 
 dependencies {
     compile 'org.scala-lang:scala-library:2.11.+'
+    compile 'com.google.protobuf.nano:protobuf-javanano:3.0.0-alpha-5'
+    compile 'org.zeromq:jeromq:0.3.5'
     testCompile 'org.scalatest:scalatest_2.11:2.2.1'
 }
 

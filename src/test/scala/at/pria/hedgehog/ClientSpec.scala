@@ -9,7 +9,7 @@ import org.zeromq.ZMQ
 /**
   * Created by clemens on 31.05.16.
   */
-class ClientSpec extends FlatSpec with Matchers{
+class ClientSpec extends FlatSpec with Matchers {
   "Protobuf messages" should "work" in {
     val msg = new HedgehogMessage()
     msg.setAcknowledgement({

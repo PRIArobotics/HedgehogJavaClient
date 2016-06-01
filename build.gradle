@@ -4,13 +4,14 @@ apply from: project.file('gradle/GitVersion.gradle')
 apply from: project.file('gradle/maven.gradle')
 apply from: project.file('gradle/proto.gradle')
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
 group = 'at.pria.hedgehog'
 
 basePom {
     project {
         name project.name
+        version '0.0.0-SNAPSHOT'
         description ''
     }
 }

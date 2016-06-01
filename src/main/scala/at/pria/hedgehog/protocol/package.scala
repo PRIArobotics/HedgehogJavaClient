@@ -1,6 +1,6 @@
 package at.pria.hedgehog
 
-import at.pria.hedgehog.client.protocol.proto.HedgehogP.HedgehogMessage
+import at.pria.hedgehog.protocol.proto.HedgehogP.HedgehogMessage
 import org.zeromq.ZMQ.Socket
 import zmq.ZMQ
 

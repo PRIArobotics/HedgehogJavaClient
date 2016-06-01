@@ -1,8 +1,8 @@
 package at.pria.hedgehog.protocol
 
-import at.pria.hedgehog.client.protocol.proto.AckP.{Acknowledgement, OK}
-import at.pria.hedgehog.client.protocol.proto.HedgehogP.HedgehogMessage
-import at.pria.hedgehog.client.protocol.proto.IOP.{AnalogRequest, AnalogUpdate}
+import at.pria.hedgehog.protocol.proto.AckP.{Acknowledgement, OK}
+import at.pria.hedgehog.protocol.proto.HedgehogP.HedgehogMessage
+import at.pria.hedgehog.protocol.proto.IOP.{AnalogRequest, AnalogUpdate}
 import org.scalatest.{FlatSpec, Matchers}
 import org.zeromq.ZMQ
 

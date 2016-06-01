@@ -1,8 +1,8 @@
 package at.pria.hedgehog.client
 
-import at.pria.hedgehog.client.protocol.proto.HedgehogP
+import at.pria.hedgehog.client.protocol.proto.HedgehogP.HedgehogMessage
+import at.pria.hedgehog.client.protocol.proto.AckP.{Acknowledgement, OK}
 import org.scalatest.{FlatSpec, Matchers}
-import HedgehogP.AckP
 import org.zeromq.ZMQ
 
 /**

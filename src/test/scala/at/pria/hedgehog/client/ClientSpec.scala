@@ -1,9 +1,8 @@
-package at.pria.hedgehog
+package at.pria.hedgehog.client
 
+import at.pria.hedgehog.client.protocol.proto.HedgehogP
 import org.scalatest.{FlatSpec, Matchers}
-import at.pria.hedgehog.protocol.proto.{AckP, HedgehogP}
-import HedgehogP.HedgehogMessage
-import AckP.{Acknowledgement, OK}
+import HedgehogP.AckP
 import org.zeromq.ZMQ
 
 /**
@@ -31,6 +30,12 @@ class ClientSpec extends FlatSpec with Matchers {
     socket2.connect("inproc://endpoint")
 
     socket1.send("ab")
+
+    val poller = new ZMQ.Poller(1)
+    val socket2Index = poller.register(socket2, ZMQ.Poller.POLLIN)
+
+    while(poller.poll() == 0) {}
+    poller.pollin(socket2Index) shouldBe true
     socket2.recvStr() shouldBe "ab"
   }
 }

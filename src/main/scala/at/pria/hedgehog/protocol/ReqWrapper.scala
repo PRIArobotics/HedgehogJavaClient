@@ -1,6 +1,5 @@
 package at.pria.hedgehog.protocol
 
-import at.pria.hedgehog.protocol.proto.HedgehogP.HedgehogMessage
 import com.google.protobuf.nano.MessageNano
 import org.zeromq.ZMQ.Socket
 
@@ -18,7 +17,7 @@ class ReqWrapper(socket: Socket) {
     sendMultipart(msg)
 
   def sendMultipart(msgs: Message*): Boolean =
-    sendMultipartRaw((for(msg <- msgs) yield MessageNano.toByteArray(msg)): _*)
+    sendMultipartRaw((for(msg <- msgs) yield Message.serialize(msg)): _*)
 
   def recvRaw(): RawMessage = {
     val Seq(msgRaw) = recvMultipartRaw()
@@ -34,7 +33,7 @@ class ReqWrapper(socket: Socket) {
   }
 
   def recvMultipart(): Seq[Message] = {
-    for(msgRaw <- recvMultipartRaw()) yield HedgehogMessage.parseFrom(msgRaw)
+    for(msgRaw <- recvMultipartRaw()) yield Message.parse(msgRaw)
   }
 
   def close() =

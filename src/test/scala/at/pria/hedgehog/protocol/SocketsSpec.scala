@@ -82,31 +82,15 @@ class SocketsSpec extends FlatSpec with Matchers {
       router
     })
 
-    val msg1 = {
-      val msg = new HedgehogMessage()
-      val req = new AnalogRequest()
-      req.port = 1
-      msg.setAnalogRequest(req)
-      msg
-    }
+    val msg1 = Analog.Request(1)
     req.send(msg1)
     val (header, msg1Recv) = router.recv()
-    msg1Recv.getPayloadCase shouldBe msg1.getPayloadCase
-    msg1Recv.getAnalogRequest.port shouldBe msg1.getAnalogRequest.port
+    msg1Recv shouldBe msg1
 
-    val msg2 = {
-      val msg = new HedgehogMessage()
-      val upd = new AnalogUpdate()
-      upd.port = 1
-      upd.value = 200
-      msg.setAnalogUpdate(upd)
-      msg
-    }
+    val msg2 = Analog.Update(1, 100)
     router.send(header, msg2)
     val msg2Recv = req.recv()
-    msg2Recv.getPayloadCase shouldBe msg2.getPayloadCase
-    msg2Recv.getAnalogUpdate.port shouldBe msg2.getAnalogUpdate.port
-    msg2Recv.getAnalogUpdate.value shouldBe msg2.getAnalogUpdate.value
+    msg2Recv shouldBe msg2
   }
 
   they should "send multipart messages correctly" in {
@@ -125,50 +109,18 @@ class SocketsSpec extends FlatSpec with Matchers {
       router
     })
 
-    val msg11 = {
-      val msg = new HedgehogMessage()
-      val req = new AnalogRequest()
-      req.port = 1
-      msg.setAnalogRequest(req)
-      msg
-    }
-    val msg12 = {
-      val msg = new HedgehogMessage()
-      val req = new AnalogRequest()
-      req.port = 2
-      msg.setAnalogRequest(req)
-      msg
-    }
+    val msg11 = Analog.Request(1)
+    val msg12 = Analog.Request(2)
     req.sendMultipart(msg11, msg12)
     val (header, Seq(msg11Recv, msg12Recv)) = router.recvMultipart()
-    msg11Recv.getPayloadCase shouldBe msg11.getPayloadCase
-    msg11Recv.getAnalogRequest.port shouldBe msg11.getAnalogRequest.port
-    msg12Recv.getPayloadCase shouldBe msg12.getPayloadCase
-    msg12Recv.getAnalogRequest.port shouldBe msg12.getAnalogRequest.port
+    msg11Recv shouldBe msg11
+    msg12Recv shouldBe msg12
 
-    val msg21 = {
-      val msg = new HedgehogMessage()
-      val upd = new AnalogUpdate()
-      upd.port = 1
-      upd.value = 200
-      msg.setAnalogUpdate(upd)
-      msg
-    }
-    val msg22 = {
-      val msg = new HedgehogMessage()
-      val upd = new AnalogUpdate()
-      upd.port = 2
-      upd.value = 100
-      msg.setAnalogUpdate(upd)
-      msg
-    }
+    val msg21 = Analog.Update(1, 200)
+    val msg22 = Analog.Update(2, 100)
     router.sendMultipart(header, msg21, msg22)
     val Seq(msg21Recv, msg22Recv) = req.recvMultipart()
-    msg21Recv.getPayloadCase shouldBe msg21.getPayloadCase
-    msg21Recv.getAnalogUpdate.port shouldBe msg21.getAnalogUpdate.port
-    msg21Recv.getAnalogUpdate.value shouldBe msg21.getAnalogUpdate.value
-    msg22Recv.getPayloadCase shouldBe msg22.getPayloadCase
-    msg22Recv.getAnalogUpdate.port shouldBe msg22.getAnalogUpdate.port
-    msg22Recv.getAnalogUpdate.value shouldBe msg22.getAnalogUpdate.value
+    msg21Recv shouldBe msg21
+    msg22Recv shouldBe msg22
   }
 }

@@ -1,10 +1,7 @@
 package at.pria.hedgehog
 
-import at.pria.hedgehog.protocol.proto.HedgehogP.HedgehogMessage
 import org.zeromq.ZMQ.Socket
 import zmq.ZMQ
-
-import scala.annotation.tailrec
 
 /**
   * Created by clemens on 01.06.16.
@@ -14,7 +11,6 @@ package object protocol {
   type Header = Seq[Binary]
 
   type RawMessage = Binary
-  type Message = HedgehogMessage
 
   val delimiter: Binary = Array()
 

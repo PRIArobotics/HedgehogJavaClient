@@ -81,8 +81,12 @@ object Motor {
     val Type = StateUpdate
   }
 
+  type ReachedCallback = StateUpdate => Unit
+
   object StateUpdate extends MessageType[StateUpdate] {
     val payloadCase = HedgehogMessage.MOTOR_STATE_UPDATE_FIELD_NUMBER
+
+    override val async = true
 
     def getPayload(proto: HedgehogMessage): Msg = {
       val payload = proto.getMotorStateUpdate

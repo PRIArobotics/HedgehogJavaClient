@@ -75,6 +75,8 @@ object Process {
   object StreamUpdate extends MessageType[StreamUpdate] {
     val payloadCase = HedgehogMessage.PROCESS_STREAM_UPDATE_FIELD_NUMBER
 
+    override val async = true
+
     def getPayload(proto: HedgehogMessage): Msg = {
       val payload = proto.getProcessStreamUpdate
       StreamUpdate(payload.pid, payload.fileno, payload.chunk)
@@ -89,12 +91,18 @@ object Process {
     }
   }
 
+  type StreamCallback = StreamUpdate => Unit
+
   case class ExitUpdate(pid: Int, exitCode: Int) extends Message {
     val Type = ExitUpdate
   }
 
+  type ExitCallback = ExitUpdate => Unit
+
   object ExitUpdate extends MessageType[ExitUpdate] {
     val payloadCase = HedgehogMessage.PROCESS_EXIT_UPDATE_FIELD_NUMBER
+
+    override val async = true
 
     def getPayload(proto: HedgehogMessage): Msg = {
       val payload = proto.getProcessExitUpdate
